@@ -23,12 +23,13 @@ A Progressive Web App (PWA) for tracking weightlifting workouts and body weight 
 ## Setup
 
 1. Deploy a [SheetsDb API](https://github.com/matty-v/sheetsdb) instance
-2. Create a Google Sheet with the following sheets:
-   - `exercises` - columns: Exercise, 100pct, 90pct, 80pct, 70pct, 60pct, Warmup
-   - `routines` - columns: Routine, Exercise, Percentage, Reps
-   - `lifting` - columns: Date, Exercise, Weight, Percentage, Reps, Notes, Routine
-   - `weight` - columns: Date, Weight
-3. Open the app and enter your Google Spreadsheet ID
+2. Create a new Google Sheet (can be empty)
+3. Open the app, go to Settings, and enter your Google Spreadsheet ID
+4. Click "Initialize Sheets" - the app will automatically create all required sheets:
+   - `exercises` - for storing exercise definitions and max weights
+   - `routines` - for defining workout routines
+   - `sets` - for tracking individual lift sets
+   - `weight` - for body weight tracking
 
 ## Deployment
 

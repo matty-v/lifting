@@ -176,7 +176,9 @@
             const [routines, setRoutines] = useState([]);
             const [selectedRoutine, setSelectedRoutine] = useState('');
             const [loading, setLoading] = useState(false);
-            const [activeTab, setActiveTab] = useState('track');
+            const [activeTab, setActiveTab] = useState(
+                localStorage.getItem('liftingSpreadsheetId') ? 'track' : 'settings'
+            );
             const [progressView, setProgressView] = useState('chart');
             const chartRef = useRef(null);
             const chartInstance = useRef(null);
@@ -211,9 +213,76 @@
             const weightChartRef = useRef(null);
             const weightChartInstance = useRef(null);
 
+            // Required sheets configuration
+            const REQUIRED_SHEETS = {
+                exercises: {
+                    columns: ['id', 'Exercise', '100pct', '90pct', '80pct', '70pct', '60pct', 'Warmup', 'LastUpdated']
+                },
+                routines: {
+                    columns: ['id', 'Routine', 'Exercise', 'Percentage', 'Reps']
+                },
+                sets: {
+                    columns: ['id', 'Date', 'Routine', 'Exercise', 'Percentage', 'Weight', 'Reps', 'Notes', 'TotalWeight']
+                },
+                weight: {
+                    columns: ['id', 'Date', 'Weight']
+                }
+            };
+
+            const [initializing, setInitializing] = useState(false);
+            const [editingSettings, setEditingSettings] = useState(false);
+            const [tempSpreadsheetId, setTempSpreadsheetId] = useState('');
+            const [setupInputId, setSetupInputId] = useState('');
+
             const createClient = () => {
                 if (!apiBaseUrl || !spreadsheetId) return null;
                 return new SheetsDbClient({ baseUrl: apiBaseUrl, spreadsheetId });
+            };
+
+            // Initialize sheets - create any missing required sheets
+            const initializeSheets = async () => {
+                const client = createClient();
+                if (!client) return { success: false, error: 'No client' };
+
+                setInitializing(true);
+                try {
+                    // Get list of existing sheets
+                    const existingSheets = await client.listSheets();
+                    const existingNames = existingSheets.map(s => s.title);
+
+                    const missingSheets = Object.keys(REQUIRED_SHEETS).filter(
+                        name => !existingNames.includes(name)
+                    );
+
+                    if (missingSheets.length === 0) {
+                        setInitializing(false);
+                        return { success: true, created: [] };
+                    }
+
+                    setStatus(`📝 Creating ${missingSheets.length} missing sheet(s)...`);
+
+                    // Create each missing sheet
+                    for (const sheetName of missingSheets) {
+                        await client.createSheet(sheetName);
+                        // Add a placeholder row to establish headers, then delete it
+                        const placeholderRow = {};
+                        REQUIRED_SHEETS[sheetName].columns.forEach(col => {
+                            placeholderRow[col] = col === 'id' ? 'placeholder' : '';
+                        });
+                        await client.createRow(sheetName, placeholderRow);
+                        await client.deleteRow(sheetName, 2); // Delete the placeholder row
+                    }
+
+                    setStatus(`✓ Created sheets: ${missingSheets.join(', ')}`);
+                    setTimeout(() => setStatus(''), 3000);
+                    setInitializing(false);
+                    return { success: true, created: missingSheets };
+                } catch (error) {
+                    console.error('Error initializing sheets:', error);
+                    setStatus(`❌ Error creating sheets: ${error.message}`);
+                    setInitializing(false);
+                    return { success: false, error: error.message };
+                }
             };
 
             const fetchExercises = async () => {
@@ -612,22 +681,10 @@
                         Weight: parseFloat(bodyWeight)
                     };
 
-                    try {
-                        await client.createRow('weight', weightData);
-                    } catch (error) {
-                        // If sheet doesn't exist, create it and try again
-                        if (error instanceof SheetsDbError && (error.status === 404 || error.status === 500)) {
-                            setStatus('📝 Creating weight sheet...');
-                            await client.createSheet('weight');
-                            await client.createRow('weight', weightData);
-                        } else {
-                            throw error;
-                        }
-                    }
-
+                    await client.createRow('weight', weightData);
                     setStatus('✓ Weight recorded!');
                     setBodyWeight('');
-                    fetchWeightHistory(); // Refresh the chart
+                    fetchWeightHistory();
                     setTimeout(() => setStatus(''), 2000);
                 } catch (error) {
                     if (error instanceof SheetsDbError) {
@@ -761,8 +818,15 @@
                     const client = new SheetsDbClient({ baseUrl: apiBaseUrl, spreadsheetId });
                     await client.health();
                     const sheets = await client.listSheets();
-                    const sheetNames = sheets.map(s => s.title).join(', ');
-                    setStatus(`✓ Connected! Found sheets: ${sheetNames}`);
+                    const sheetNames = sheets.map(s => s.title);
+                    const requiredNames = Object.keys(REQUIRED_SHEETS);
+                    const missing = requiredNames.filter(name => !sheetNames.includes(name));
+
+                    if (missing.length > 0) {
+                        setStatus(`✓ Connected! Found: ${sheetNames.join(', ')}. Missing: ${missing.join(', ')}`);
+                    } else {
+                        setStatus(`✓ Connected! All required sheets present: ${requiredNames.join(', ')}`);
+                    }
                     setTimeout(() => setStatus(''), 5000);
                 } catch (error) {
                     if (error instanceof SheetsDbError) {
@@ -771,6 +835,20 @@
                         setStatus('❌ Connection failed. Check your API URL.');
                     }
                 }
+            };
+
+            const handleInitializeSheets = async () => {
+                if (!spreadsheetId) {
+                    setStatus('⚠️ Please enter a Sheet ID first');
+                    return;
+                }
+                localStorage.setItem('liftingSpreadsheetId', spreadsheetId);
+                await initializeSheets();
+                // Refresh data after initialization
+                fetchExercises();
+                fetchRoutines();
+                fetchLiftingData();
+                fetchWeightHistory();
             };
 
             const handleChange = (e) => {
@@ -850,13 +928,32 @@
                 return filtered;
             };
 
-            // Fetch data on component mount and when spreadsheetId changes
+            // Initialize sheets and fetch data on component mount and when spreadsheetId changes
             useEffect(() => {
-                if (spreadsheetId) {
-                    fetchExercises();
-                    fetchRoutines();
-                    fetchLiftingData();
-                }
+                const initAndFetch = async () => {
+                    if (!spreadsheetId) {
+                        setActiveTab('settings');
+                        return;
+                    }
+
+                    // First, ensure all required sheets exist
+                    const result = await initializeSheets();
+                    if (result.success) {
+                        // Switch to settings if sheets were just created (user needs to know)
+                        if (result.created && result.created.length > 0) {
+                            setActiveTab('settings');
+                        }
+                        // Fetch all data
+                        fetchExercises();
+                        fetchRoutines();
+                        fetchLiftingData();
+                        fetchWeightHistory();
+                    } else {
+                        // If initialization failed, go to settings
+                        setActiveTab('settings');
+                    }
+                };
+                initAndFetch();
             }, [spreadsheetId]);
 
             // Update chart when data changes or when switching to chart view
@@ -1015,12 +1112,48 @@
 
                             {!spreadsheetId && (
                                 <div className="mb-6 p-4 bg-amber-50 border border-amber-200 rounded-lg">
-                                    <p className="text-sm text-amber-800 font-medium mb-2">⚙️ Setup Required:</p>
-                                    <p className="text-xs text-amber-700">Add your Google Sheet ID in Settings</p>
+                                    <p className="text-sm text-amber-800 font-medium mb-3">⚙️ Setup Required</p>
+                                    <ol className="list-decimal list-inside space-y-2 text-xs text-amber-700">
+                                        <li>Create a new Google Sheet</li>
+                                        <li>Share it with:<br/>
+                                            <code className="block mt-1 p-2 bg-amber-100 rounded text-xs break-all select-all text-amber-800">
+                                                sheets-db-api@kinetic-object-322814.iam.gserviceaccount.com
+                                            </code>
+                                            <span className="text-amber-600">(Editor access)</span>
+                                        </li>
+                                        <li>Copy the Sheet ID from the URL</li>
+                                        <li>Paste below and click "Connect"</li>
+                                    </ol>
+                                    <div className="mt-4">
+                                        <input
+                                            type="text"
+                                            value={setupInputId}
+                                            onChange={(e) => setSetupInputId(e.target.value)}
+                                            placeholder="Paste your Google Sheet ID here"
+                                            className="w-full px-3 py-2 border border-amber-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                                        />
+                                        <button
+                                            type="button"
+                                            onClick={async () => {
+                                                if (!setupInputId) {
+                                                    setStatus('⚠️ Please enter a Sheet ID');
+                                                    return;
+                                                }
+                                                localStorage.setItem('liftingSpreadsheetId', setupInputId);
+                                                setSpreadsheetId(setupInputId);
+                                                setSetupInputId('');
+                                            }}
+                                            disabled={!setupInputId || initializing}
+                                            className="w-full mt-2 px-3 py-2 bg-green-600 text-white rounded-lg text-sm font-medium hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                                        >
+                                            {initializing ? 'Initializing...' : 'Connect'}
+                                        </button>
+                                    </div>
                                 </div>
                             )}
 
-                            {/* Tab Navigation */}
+                            {/* Tab Navigation - only show when setup is complete */}
+                            {spreadsheetId && (
                             <div className="flex gap-1 mb-6 border-b border-gray-200 overflow-x-auto scrollbar-hide -mx-2 px-2" style={{scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch'}}>
                                 <button
                                     onClick={() => {
@@ -1087,9 +1220,10 @@
                                     Settings
                                 </button>
                             </div>
+                            )}
 
-                            {/* Track Tab */}
-                            {activeTab === 'track' && (
+                            {/* Tab Content - only show when setup is complete */}
+                            {spreadsheetId && activeTab === 'track' && (
                                 <form onSubmit={handleSubmit} className="space-y-4">
                                     <div>
                                         <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -1222,7 +1356,7 @@
                             )}
 
                             {/* Exercises Tab */}
-                            {activeTab === 'exercises' && (
+                            {spreadsheetId && activeTab === 'exercises' && (
                                 <div className="space-y-4">
                                     {/* Add/Edit Form */}
                                     {(isAddingExercise || editingExercise) && (
@@ -1400,7 +1534,7 @@
                             )}
 
                             {/* Routines Tab */}
-                            {activeTab === 'routines' && (
+                            {spreadsheetId && activeTab === 'routines' && (
                                 <div className="space-y-4">
                                     {/* Add/Edit Form - Always visible */}
                                     <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
@@ -1552,7 +1686,7 @@
                             )}
 
                             {/* Weight Tab */}
-                            {activeTab === 'weight' && (
+                            {spreadsheetId && activeTab === 'weight' && (
                                 <div className="space-y-4">
                                     <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
                                         <h3 className="font-medium text-gray-800 mb-3">Log Body Weight</h3>
@@ -1611,53 +1745,89 @@
                             )}
 
                             {/* Settings Tab */}
-                            {activeTab === 'settings' && (
+                            {spreadsheetId && activeTab === 'settings' && (
                                 <div className="space-y-6">
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                                            Google Sheet ID
-                                        </label>
-                                        <input
-                                            type="text"
-                                            value={spreadsheetId}
-                                            onChange={(e) => setSpreadsheetId(e.target.value)}
-                                            placeholder="1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms"
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm"
-                                        />
-                                        <p className="mt-1 text-xs text-gray-500">
-                                            Found in your Google Sheets URL: docs.google.com/spreadsheets/d/<span className="font-mono bg-gray-100 px-1">SHEET_ID</span>/edit
-                                        </p>
-                                    </div>
-
-                                    <div className="flex gap-2">
-                                        <button
-                                            type="button"
-                                            onClick={testConnection}
-                                            className="flex-1 px-4 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm font-medium"
-                                        >
-                                            Test Connection
-                                        </button>
-                                        <button
-                                            type="button"
-                                            onClick={saveSettings}
-                                            className="flex-1 px-4 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors text-sm font-medium"
-                                        >
-                                            Save
-                                        </button>
-                                    </div>
-
-                                    <div className="pt-6 border-t border-gray-200">
-                                        <details className="text-sm text-gray-600">
-                                            <summary className="cursor-pointer font-medium text-gray-700 mb-2">
-                                                📋 Setup Instructions
-                                            </summary>
-                                            <ol className="list-decimal list-inside space-y-2 mt-3 text-xs">
-                                                <li>Open your Google Sheet and copy the Sheet ID from the URL</li>
-                                                <li>Ensure your spreadsheet has sheets named: sets, exercises, routines</li>
-                                                <li>Click "Test Connection" to verify, then "Save"</li>
-                                            </ol>
-                                        </details>
-                                    </div>
+                                    {editingSettings ? (
+                                        /* Editing mode */
+                                        <>
+                                            <p className="text-sm text-gray-800 font-medium">Change Spreadsheet</p>
+                                            <p className="text-xs text-gray-500">
+                                                Make sure to share the new spreadsheet with:<br/>
+                                                <code className="block mt-1 p-2 bg-gray-100 rounded text-xs break-all select-all">
+                                                    sheets-db-api@kinetic-object-322814.iam.gserviceaccount.com
+                                                </code>
+                                            </p>
+                                            <div>
+                                                <input
+                                                    type="text"
+                                                    value={tempSpreadsheetId}
+                                                    onChange={(e) => setTempSpreadsheetId(e.target.value)}
+                                                    placeholder="Paste your Google Sheet ID here"
+                                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm"
+                                                />
+                                            </div>
+                                            <div className="flex gap-2">
+                                                <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        setEditingSettings(false);
+                                                        setTempSpreadsheetId('');
+                                                    }}
+                                                    className="flex-1 px-4 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm font-medium"
+                                                >
+                                                    Cancel
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    onClick={async () => {
+                                                        if (!tempSpreadsheetId) {
+                                                            setStatus('⚠️ Please enter a Sheet ID');
+                                                            return;
+                                                        }
+                                                        localStorage.setItem('liftingSpreadsheetId', tempSpreadsheetId);
+                                                        setSpreadsheetId(tempSpreadsheetId);
+                                                        setEditingSettings(false);
+                                                        setTempSpreadsheetId('');
+                                                        // Trigger initialization
+                                                        await initializeSheets();
+                                                        fetchExercises();
+                                                        fetchRoutines();
+                                                        fetchLiftingData();
+                                                        fetchWeightHistory();
+                                                    }}
+                                                    disabled={initializing || !tempSpreadsheetId}
+                                                    className="flex-1 px-4 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                                                >
+                                                    {initializing ? 'Initializing...' : 'Save & Initialize'}
+                                                </button>
+                                            </div>
+                                        </>
+                                    ) : (
+                                        /* Connected state */
+                                        <>
+                                            <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
+                                                <p className="text-sm text-green-800 font-medium mb-2">✓ Connected</p>
+                                                <a
+                                                    href={`https://docs.google.com/spreadsheets/d/${spreadsheetId}/edit`}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="text-sm text-green-700 hover:text-green-900 underline break-all"
+                                                >
+                                                    Open Spreadsheet
+                                                </a>
+                                            </div>
+                                            <button
+                                                type="button"
+                                                onClick={() => {
+                                                    setTempSpreadsheetId(spreadsheetId);
+                                                    setEditingSettings(true);
+                                                }}
+                                                className="w-full px-4 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm font-medium"
+                                            >
+                                                Change Spreadsheet
+                                            </button>
+                                        </>
+                                    )}
 
                                     {status && (
                                         <div className={`p-3 rounded-lg text-sm font-medium ${
