@@ -15,6 +15,12 @@ BUCKET_NAME=$1
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 cd "$SCRIPT_DIR"
 
+# Update service worker cache version with timestamp to bust cache on deploy
+CACHE_VERSION="lifting-tracker-$(date +%s)"
+echo "Updating cache version to: $CACHE_VERSION"
+sed -i.bak "s/const CACHE_NAME = '.*'/const CACHE_NAME = '$CACHE_VERSION'/" sw.js
+rm -f sw.js.bak
+
 echo "Uploading PWA files to gs://$BUCKET_NAME/..."
 
 # Upload index.html

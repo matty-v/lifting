@@ -1,4 +1,4 @@
-const CACHE_NAME = 'lifting-tracker-v1';
+const CACHE_NAME = 'lifting-tracker-1766846958';
 const urlsToCache = [
   '/',
   '/index.html',
