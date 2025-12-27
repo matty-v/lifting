@@ -1,0 +1,1 @@
+export { ExercisesTab } from './ExercisesTab';

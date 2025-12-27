@@ -1,2 +1,35 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+
+# OS
 .DS_Store
+
+# Claude
 .claude/
+
+# Logs
+*.log
+npm-debug.log*
+
+# TypeScript
+*.tsbuildinfo
+
+# Old monolithic version
+index.old.html
+
+# Test results
+coverage/
+playwright-report/
+test-results/
