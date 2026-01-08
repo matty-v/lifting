@@ -58,7 +58,7 @@ export function ExercisesTab() {
               placeholder="Exercise name"
               value={exerciseForm.name}
               onChange={(e) => setExerciseForm({ ...exerciseForm, name: e.target.value })}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-800"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-800 placeholder:text-gray-400 dark:placeholder:text-gray-400"
             />
             <div className="grid grid-cols-3 gap-2">
               <div>
@@ -68,7 +68,7 @@ export function ExercisesTab() {
                   step="0.5"
                   value={exerciseForm.pct100}
                   onChange={(e) => setExerciseForm({ ...exerciseForm, pct100: e.target.value })}
-                  className="w-full px-2 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-800"
+                  className="w-full px-2 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-800 placeholder:text-gray-400 dark:placeholder:text-gray-400"
                 />
               </div>
               <div>
@@ -78,7 +78,7 @@ export function ExercisesTab() {
                   step="0.5"
                   value={exerciseForm.pct90}
                   onChange={(e) => setExerciseForm({ ...exerciseForm, pct90: e.target.value })}
-                  className="w-full px-2 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-800"
+                  className="w-full px-2 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-800 placeholder:text-gray-400 dark:placeholder:text-gray-400"
                 />
               </div>
               <div>
@@ -88,7 +88,7 @@ export function ExercisesTab() {
                   step="0.5"
                   value={exerciseForm.pct80}
                   onChange={(e) => setExerciseForm({ ...exerciseForm, pct80: e.target.value })}
-                  className="w-full px-2 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-800"
+                  className="w-full px-2 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-800 placeholder:text-gray-400 dark:placeholder:text-gray-400"
                 />
               </div>
             </div>
@@ -100,7 +100,7 @@ export function ExercisesTab() {
                   step="0.5"
                   value={exerciseForm.pct70}
                   onChange={(e) => setExerciseForm({ ...exerciseForm, pct70: e.target.value })}
-                  className="w-full px-2 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-800"
+                  className="w-full px-2 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-800 placeholder:text-gray-400 dark:placeholder:text-gray-400"
                 />
               </div>
               <div>
@@ -110,7 +110,7 @@ export function ExercisesTab() {
                   step="0.5"
                   value={exerciseForm.pct60}
                   onChange={(e) => setExerciseForm({ ...exerciseForm, pct60: e.target.value })}
-                  className="w-full px-2 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-800"
+                  className="w-full px-2 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-800 placeholder:text-gray-400 dark:placeholder:text-gray-400"
                 />
               </div>
               <div>
@@ -120,7 +120,7 @@ export function ExercisesTab() {
                   step="0.5"
                   value={exerciseForm.warmup}
                   onChange={(e) => setExerciseForm({ ...exerciseForm, warmup: e.target.value })}
-                  className="w-full px-2 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-800"
+                  className="w-full px-2 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-800 placeholder:text-gray-400 dark:placeholder:text-gray-400"
                 />
               </div>
             </div>

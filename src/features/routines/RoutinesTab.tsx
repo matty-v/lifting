@@ -69,7 +69,7 @@ export function RoutinesTab() {
               }}
               onFocus={() => setShowRoutineSuggestions(true)}
               onBlur={() => setTimeout(() => setShowRoutineSuggestions(false), 200)}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-800"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-800 placeholder:text-gray-400 dark:placeholder:text-gray-400"
             />
             {showRoutineSuggestions && uniqueRoutines.length > 0 && routineForm.routine && (
               <div className="absolute z-10 w-full mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg max-h-32 overflow-y-auto">
@@ -123,7 +123,7 @@ export function RoutinesTab() {
               placeholder="Reps"
               value={routineForm.reps}
               onChange={(e) => setRoutineForm({ ...routineForm, reps: e.target.value })}
-              className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-800"
+              className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-800 placeholder:text-gray-400 dark:placeholder:text-gray-400"
             />
           </div>
 
