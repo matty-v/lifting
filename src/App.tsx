@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { AppProvider, useApp } from '@/context';
-import { TabNavigation } from '@/components/ui';
+import { AppProvider, useApp, ThemeProvider } from '@/context';
+import { TabNavigation, ThemeToggle } from '@/components/ui';
 import { Dumbbell } from '@/components/icons';
 import { SetupWizard, SettingsTab } from '@/features/settings';
 import { ExercisesTab } from '@/features/exercises';
@@ -54,15 +54,16 @@ function AppContent() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-white to-purple-100">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-white to-purple-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <div className="max-w-md mx-auto px-4 py-8">
-        <div className="bg-white rounded-2xl shadow-xl p-6">
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6">
           {/* Header */}
           <div className="flex items-center gap-3 mb-6">
-            <div className="p-2 bg-indigo-100 rounded-xl">
-              <Dumbbell size={32} className="text-indigo-600" />
+            <div className="p-2 bg-indigo-100 dark:bg-indigo-900 rounded-xl">
+              <Dumbbell size={32} className="text-indigo-600 dark:text-indigo-400" />
             </div>
-            <h1 className="text-2xl font-bold text-gray-800">Lifting Tracker</h1>
+            <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100 flex-1">Lifting Tracker</h1>
+            <ThemeToggle />
           </div>
 
           {/* Setup Wizard (shown when no spreadsheetId) */}
@@ -87,8 +88,10 @@ function AppContent() {
 
 export default function App() {
   return (
-    <AppProvider>
-      <AppContent />
-    </AppProvider>
+    <ThemeProvider>
+      <AppProvider>
+        <AppContent />
+      </AppProvider>
+    </ThemeProvider>
   );
 }

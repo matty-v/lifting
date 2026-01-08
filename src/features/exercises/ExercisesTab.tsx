@@ -48,8 +48,8 @@ export function ExercisesTab() {
     <div className="space-y-4">
       {/* Add/Edit Form */}
       {(isAddingExercise || editingExercise) && (
-        <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
-          <h3 className="font-medium text-gray-800 mb-3">
+        <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-700">
+          <h3 className="font-medium text-gray-800 dark:text-gray-100 mb-3">
             {editingExercise ? 'Edit Exercise' : 'Add Exercise'}
           </h3>
           <div className="space-y-3">
@@ -58,7 +58,7 @@ export function ExercisesTab() {
               placeholder="Exercise name"
               value={exerciseForm.name}
               onChange={(e) => setExerciseForm({ ...exerciseForm, name: e.target.value })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm"
             />
             <div className="grid grid-cols-3 gap-2">
               <div>
@@ -68,7 +68,7 @@ export function ExercisesTab() {
                   step="0.5"
                   value={exerciseForm.pct100}
                   onChange={(e) => setExerciseForm({ ...exerciseForm, pct100: e.target.value })}
-                  className="w-full px-2 py-2 border border-gray-300 rounded-lg text-sm"
+                  className="w-full px-2 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm"
                 />
               </div>
               <div>
@@ -78,7 +78,7 @@ export function ExercisesTab() {
                   step="0.5"
                   value={exerciseForm.pct90}
                   onChange={(e) => setExerciseForm({ ...exerciseForm, pct90: e.target.value })}
-                  className="w-full px-2 py-2 border border-gray-300 rounded-lg text-sm"
+                  className="w-full px-2 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm"
                 />
               </div>
               <div>
@@ -88,7 +88,7 @@ export function ExercisesTab() {
                   step="0.5"
                   value={exerciseForm.pct80}
                   onChange={(e) => setExerciseForm({ ...exerciseForm, pct80: e.target.value })}
-                  className="w-full px-2 py-2 border border-gray-300 rounded-lg text-sm"
+                  className="w-full px-2 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm"
                 />
               </div>
             </div>
@@ -100,7 +100,7 @@ export function ExercisesTab() {
                   step="0.5"
                   value={exerciseForm.pct70}
                   onChange={(e) => setExerciseForm({ ...exerciseForm, pct70: e.target.value })}
-                  className="w-full px-2 py-2 border border-gray-300 rounded-lg text-sm"
+                  className="w-full px-2 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm"
                 />
               </div>
               <div>
@@ -110,7 +110,7 @@ export function ExercisesTab() {
                   step="0.5"
                   value={exerciseForm.pct60}
                   onChange={(e) => setExerciseForm({ ...exerciseForm, pct60: e.target.value })}
-                  className="w-full px-2 py-2 border border-gray-300 rounded-lg text-sm"
+                  className="w-full px-2 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm"
                 />
               </div>
               <div>
@@ -120,7 +120,7 @@ export function ExercisesTab() {
                   step="0.5"
                   value={exerciseForm.warmup}
                   onChange={(e) => setExerciseForm({ ...exerciseForm, warmup: e.target.value })}
-                  className="w-full px-2 py-2 border border-gray-300 rounded-lg text-sm"
+                  className="w-full px-2 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm"
                 />
               </div>
             </div>
@@ -128,14 +128,14 @@ export function ExercisesTab() {
               <button
                 type="button"
                 onClick={handleCancel}
-                className="flex-1 px-3 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm"
+                className="flex-1 px-3 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg text-sm"
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={saveExercise}
-                className="flex-1 px-3 py-2 bg-indigo-600 text-white rounded-lg text-sm"
+                className="flex-1 px-3 py-2 bg-indigo-600 dark:bg-indigo-500 text-white rounded-lg text-sm"
               >
                 Save
               </button>
@@ -149,7 +149,7 @@ export function ExercisesTab() {
         <button
           type="button"
           onClick={() => setIsAddingExercise(true)}
-          className="w-full px-4 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors text-sm font-medium"
+          className="w-full px-4 py-3 bg-indigo-600 dark:bg-indigo-500 text-white rounded-lg hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-colors text-sm font-medium"
         >
           + Add Exercise
         </button>
@@ -160,10 +160,10 @@ export function ExercisesTab() {
         {exercises.map((exercise, index) => (
           <div
             key={exercise.id}
-            className="p-3 bg-white rounded-lg border border-gray-200 flex justify-between items-center"
+            className="p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 flex justify-between items-center"
           >
             <div>
-              <p className="font-medium text-gray-800">{exercise.Exercise}</p>
+              <p className="font-medium text-gray-800 dark:text-gray-100">{exercise.Exercise}</p>
               <p className="text-xs text-gray-500">
                 100%: {exercise['100pct'] || '-'} | 90%: {exercise['90pct'] || '-'} | 80%:{' '}
                 {exercise['80pct'] || '-'}
@@ -173,7 +173,7 @@ export function ExercisesTab() {
               <button
                 type="button"
                 onClick={() => handleEditExercise(exercise)}
-                className="px-3 py-1 bg-gray-100 text-gray-700 rounded text-xs"
+                className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded text-xs"
               >
                 Edit
               </button>
@@ -190,7 +190,7 @@ export function ExercisesTab() {
       </div>
 
       {exercises.length === 0 && !isAddingExercise && (
-        <div className="p-4 bg-gray-50 rounded-lg border border-gray-200 text-center">
+        <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-700 text-center">
           <p className="text-gray-500 text-sm">No exercises yet. Add your first exercise above!</p>
         </div>
       )}

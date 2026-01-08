@@ -57,11 +57,11 @@ export function SheetsSettingsPanel({
     <div className="space-y-6">
       {isEditing ? (
         <>
-          <p className="text-sm text-gray-800 font-medium">Change Spreadsheet</p>
+          <p className="text-sm text-gray-800 dark:text-gray-100 font-medium">Change Spreadsheet</p>
           <p className="text-xs text-gray-500">
             Make sure to share the new spreadsheet with:
             <br />
-            <code className="block mt-1 p-2 bg-gray-100 rounded text-xs break-all select-all">
+            <code className="block mt-1 p-2 bg-gray-100 dark:bg-gray-700 rounded text-xs break-all select-all">
               {serviceAccountEmail}
             </code>
           </p>
@@ -71,14 +71,14 @@ export function SheetsSettingsPanel({
               value={tempInputValue}
               onChange={(e) => onTempInputChange(e.target.value)}
               placeholder={inputPlaceholder}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm"
+              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm"
             />
           </div>
           <div className="flex gap-2">
             <button
               type="button"
               onClick={handleCancel}
-              className="flex-1 px-4 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm font-medium"
+              className="flex-1 px-4 py-3 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors text-sm font-medium"
             >
               Cancel
             </button>
@@ -94,13 +94,13 @@ export function SheetsSettingsPanel({
         </>
       ) : (
         <>
-          <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
-            <p className="text-sm text-green-800 font-medium mb-2">✓ {connectedText}</p>
+          <div className="p-4 bg-green-50 dark:bg-indigo-900 border border-green-200 dark:border-gray-700 rounded-lg">
+            <p className="text-sm text-green-800 dark:text-gray-100 font-medium mb-2">✓ {connectedText}</p>
             <a
               href={`https://docs.google.com/spreadsheets/d/${spreadsheetId}/edit`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm text-green-700 hover:text-green-900 underline break-all"
+              className="text-sm text-green-700 dark:text-gray-300 hover:text-green-900 dark:hover:text-white underline break-all"
             >
               Open Spreadsheet
             </a>
@@ -108,7 +108,7 @@ export function SheetsSettingsPanel({
           <button
             type="button"
             onClick={handleStartEditing}
-            className="w-full px-4 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm font-medium"
+            className="w-full px-4 py-3 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors text-sm font-medium"
           >
             {changeButtonText}
           </button>
@@ -130,10 +130,10 @@ function StatusMessage({ status }: { status: string }) {
   const isSuccess = status.includes('✓') || status.includes('✔');
 
   const bgColor = isError
-    ? 'bg-red-50 text-red-800'
+    ? 'bg-red-50 dark:bg-indigo-900 text-red-800 dark:text-gray-100'
     : isSuccess
-      ? 'bg-green-50 text-green-800'
-      : 'bg-blue-50 text-blue-800';
+      ? 'bg-green-50 dark:bg-indigo-900 text-green-800 dark:text-gray-100'
+      : 'bg-blue-50 dark:bg-indigo-900 text-blue-800 dark:text-gray-100';
 
   return (
     <div className={`p-3 rounded-lg text-sm font-medium ${bgColor}`}>
