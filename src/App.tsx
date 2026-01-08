@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { AppProvider, useApp } from '@/context';
+import { AppProvider, useApp, ThemeProvider } from '@/context';
 import { TabNavigation, ThemeToggle } from '@/components/ui';
 import { Dumbbell } from '@/components/icons';
 import { SetupWizard, SettingsTab } from '@/features/settings';
@@ -88,8 +88,10 @@ function AppContent() {
 
 export default function App() {
   return (
-    <AppProvider>
-      <AppContent />
-    </AppProvider>
+    <ThemeProvider>
+      <AppProvider>
+        <AppContent />
+      </AppProvider>
+    </ThemeProvider>
   );
 }

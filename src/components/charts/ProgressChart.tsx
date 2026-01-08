@@ -1,7 +1,7 @@
 import { useRef, useMemo } from 'react';
 import type { ChartConfiguration } from 'chart.js';
 import { useChart } from '@/hooks/useChart';
-import { useTheme } from '@/hooks/useTheme';
+import { useTheme } from '@/context';
 import type { SetRecord } from '@/types';
 import { formatDateForDisplay } from '@/utils';
 
