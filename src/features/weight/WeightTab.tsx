@@ -17,7 +17,7 @@ export function WeightTab() {
               step="0.1"
               value={bodyWeight}
               onChange={(e) => setBodyWeight(e.target.value)}
-              className="w-full px-3 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-lg bg-white dark:bg-gray-800"
+              className="w-full px-3 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-lg bg-white dark:bg-gray-800 placeholder:text-gray-400 dark:placeholder:text-gray-400"
               placeholder="199.9"
             />
           </div>

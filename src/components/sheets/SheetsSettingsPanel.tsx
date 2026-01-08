@@ -71,7 +71,7 @@ export function SheetsSettingsPanel({
               value={tempInputValue}
               onChange={(e) => onTempInputChange(e.target.value)}
               placeholder={inputPlaceholder}
-              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm bg-white dark:bg-gray-800"
+              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm bg-white dark:bg-gray-800 placeholder:text-gray-400 dark:placeholder:text-gray-400"
             />
           </div>
           <div className="flex gap-2">

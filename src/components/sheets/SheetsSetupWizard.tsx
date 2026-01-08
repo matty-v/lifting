@@ -62,7 +62,7 @@ export function SheetsSetupWizard({
           value={inputValue}
           onChange={(e) => onInputChange(e.target.value)}
           placeholder={inputPlaceholder}
-          className="w-full px-3 py-2 border border-amber-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-800 focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+          className="w-full px-3 py-2 border border-amber-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-800 focus:ring-2 focus:ring-amber-500 focus:border-transparent placeholder:text-gray-400 dark:placeholder:text-gray-400"
         />
         <button
           type="button"
