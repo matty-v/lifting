@@ -86,18 +86,6 @@ export function TrackLiftTab() {
 
         <div className="grid grid-cols-3 gap-3">
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Weight *</label>
-            <input
-              type="number"
-              step="0.5"
-              value={formData.weight}
-              onChange={(e) => setFormData({ ...formData, weight: e.target.value })}
-              required
-              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-lg bg-white dark:bg-gray-800 placeholder:text-gray-400 dark:placeholder:text-gray-400"
-              placeholder="135"
-            />
-          </div>
-          <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">% *</label>
             <select
               value={formData.percentage}
@@ -112,6 +100,18 @@ export function TrackLiftTab() {
                 </option>
               ))}
             </select>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Weight *</label>
+            <input
+              type="number"
+              step="0.5"
+              value={formData.weight}
+              onChange={(e) => setFormData({ ...formData, weight: e.target.value })}
+              required
+              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-lg bg-white dark:bg-gray-800 placeholder:text-gray-400 dark:placeholder:text-gray-400"
+              placeholder="135"
+            />
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Reps *</label>
