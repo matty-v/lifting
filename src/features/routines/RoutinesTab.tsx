@@ -95,7 +95,7 @@ export function RoutinesTab() {
           <select
             value={routineForm.exercise}
             onChange={(e) => setRoutineForm({ ...routineForm, exercise: e.target.value })}
-            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-800"
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
           >
             <option value="">Select Exercise</option>
             {exercises.map((ex) => (
@@ -109,7 +109,7 @@ export function RoutinesTab() {
             <select
               value={routineForm.percentage}
               onChange={(e) => setRoutineForm({ ...routineForm, percentage: e.target.value })}
-              className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-800"
+              className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
             >
               <option value="">Percentage</option>
               {PERCENTAGE_OPTIONS.map((opt) => (

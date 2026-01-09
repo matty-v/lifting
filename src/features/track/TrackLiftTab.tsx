@@ -56,7 +56,7 @@ export function TrackLiftTab() {
           <select
             value={selectedRoutine}
             onChange={(e) => setSelectedRoutine(e.target.value)}
-            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-lg bg-white dark:bg-gray-800"
+            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
           >
             <option value="">No Routine</option>
             {uniqueRoutines.map((routine) => (
@@ -73,7 +73,7 @@ export function TrackLiftTab() {
             value={formData.exercise}
             onChange={(e) => setFormData({ ...formData, exercise: e.target.value })}
             required
-            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-lg bg-white dark:bg-gray-800"
+            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
           >
             <option value="">Select Exercise</option>
             {exercises.map((ex) => (
@@ -91,7 +91,7 @@ export function TrackLiftTab() {
               value={formData.percentage}
               onChange={(e) => setFormData({ ...formData, percentage: e.target.value })}
               required
-              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-lg bg-white dark:bg-gray-800"
+              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
             >
               <option value="">%</option>
               {PERCENTAGE_OPTIONS.map((opt) => (
