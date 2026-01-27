@@ -36,23 +36,23 @@ export function SheetsSetupWizard({
   };
 
   return (
-    <div className="mb-6 p-4 bg-amber-50 dark:bg-indigo-900 border border-amber-200 dark:border-gray-700 rounded-lg">
-      <p className="text-sm text-amber-800 dark:text-gray-100 font-medium mb-3">⚙️ {title}</p>
-      <ol className="list-decimal list-inside space-y-2 text-xs text-amber-700 dark:text-gray-300">
+    <div className="mb-6 p-4 bg-[var(--accent-purple)]/10 border border-[var(--accent-purple)]/20 rounded-lg">
+      <p className="text-sm text-[var(--accent-purple)] font-medium mb-3">⚙️ {title}</p>
+      <ol className="list-decimal list-inside space-y-2 text-xs text-muted-foreground">
         <li>Create a new Google Sheet</li>
         <li>
           Share it with:
           <br />
-          <code className="block mt-1 p-2 bg-amber-100 dark:bg-gray-700 rounded text-xs break-all select-all text-amber-800 dark:text-gray-100">
+          <code className="block mt-1 p-2 bg-secondary rounded text-xs break-all select-all text-[var(--accent-cyan)]">
             {serviceAccountEmail}
           </code>
-          <span className="text-amber-600 dark:text-gray-400">(Editor access)</span>
+          <span className="text-muted-foreground">(Editor access)</span>
         </li>
         <li>Copy the Sheet ID from the URL</li>
         <li>Paste below and click "{connectButtonText}"</li>
       </ol>
       {additionalInstructions && (
-        <div className="mt-3 text-xs text-amber-700 dark:text-gray-300">
+        <div className="mt-3 text-xs text-muted-foreground">
           {additionalInstructions}
         </div>
       )}
@@ -62,13 +62,13 @@ export function SheetsSetupWizard({
           value={inputValue}
           onChange={(e) => onInputChange(e.target.value)}
           placeholder={inputPlaceholder}
-          className="w-full px-3 py-2 border border-amber-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-800 focus:ring-2 focus:ring-amber-500 focus:border-transparent placeholder:text-gray-400 dark:placeholder:text-gray-400"
+          className="w-full px-3 py-2 border border-border rounded-lg text-sm bg-secondary text-foreground focus:ring-2 focus:ring-ring focus:border-transparent placeholder:text-muted-foreground"
         />
         <button
           type="button"
           onClick={handleConnect}
           disabled={!inputValue || isConnecting}
-          className="w-full mt-2 px-3 py-2 bg-green-600 text-white rounded-lg text-sm font-medium hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full mt-2 px-3 py-2 btn-primary rounded-lg text-sm disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isConnecting ? connectingButtonText : connectButtonText}
         </button>

@@ -23,10 +23,13 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const root = document.documentElement;
-    if (theme === 'dark') {
-      root.classList.add('dark');
-    } else {
+    // Dark is default, light is the variant
+    if (theme === 'light') {
+      root.classList.add('light');
       root.classList.remove('dark');
+    } else {
+      root.classList.add('dark');
+      root.classList.remove('light');
     }
     localStorage.setItem(THEME_STORAGE_KEY, theme);
   }, [theme]);

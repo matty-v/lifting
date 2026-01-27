@@ -52,11 +52,11 @@ export function TrackLiftTab() {
     <div className="space-y-4">
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Routine</label>
+          <label className="block text-sm font-medium text-muted-foreground mb-2">Routine</label>
           <select
             value={selectedRoutine}
             onChange={(e) => setSelectedRoutine(e.target.value)}
-            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+            className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent text-lg bg-secondary text-foreground"
           >
             <option value="">No Routine</option>
             {uniqueRoutines.map((routine) => (
@@ -68,12 +68,12 @@ export function TrackLiftTab() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Exercise *</label>
+          <label className="block text-sm font-medium text-muted-foreground mb-2">Exercise *</label>
           <select
             value={formData.exercise}
             onChange={(e) => setFormData({ ...formData, exercise: e.target.value })}
             required
-            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+            className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent text-lg bg-secondary text-foreground"
           >
             <option value="">Select Exercise</option>
             {exercises.map((ex) => (
@@ -86,12 +86,12 @@ export function TrackLiftTab() {
 
         <div className="grid grid-cols-3 gap-3">
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">% *</label>
+            <label className="block text-sm font-medium text-muted-foreground mb-2">% *</label>
             <select
               value={formData.percentage}
               onChange={(e) => setFormData({ ...formData, percentage: e.target.value })}
               required
-              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+              className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent text-lg bg-secondary text-foreground"
             >
               <option value="">%</option>
               {PERCENTAGE_OPTIONS.map((opt) => (
@@ -102,33 +102,33 @@ export function TrackLiftTab() {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Weight *</label>
+            <label className="block text-sm font-medium text-muted-foreground mb-2">Weight *</label>
             <input
               type="number"
               step="0.5"
               value={formData.weight}
               onChange={(e) => setFormData({ ...formData, weight: e.target.value })}
               required
-              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-lg bg-white dark:bg-gray-800 placeholder:text-gray-400 dark:placeholder:text-gray-400"
+              className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent text-lg bg-secondary text-foreground placeholder:text-muted-foreground"
               placeholder="135"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Reps *</label>
+            <label className="block text-sm font-medium text-muted-foreground mb-2">Reps *</label>
             <input
               type="number"
               value={formData.reps}
               onChange={(e) => setFormData({ ...formData, reps: e.target.value })}
               required
-              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-lg bg-white dark:bg-gray-800 placeholder:text-gray-400 dark:placeholder:text-gray-400"
+              className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent text-lg bg-secondary text-foreground placeholder:text-muted-foreground"
               placeholder="5"
             />
           </div>
         </div>
 
         {weightRec.current && (
-          <div className="p-3 bg-indigo-50 dark:bg-indigo-900 rounded-lg">
-            <p className="text-sm text-indigo-800 dark:text-indigo-200">
+          <div className="p-3 bg-[var(--accent-cyan)]/10 border border-[var(--accent-cyan)]/20 rounded-lg">
+            <p className="text-sm text-[var(--accent-cyan)]">
               <span className="font-medium">Current:</span> {weightRec.current} lbs
               <span className="mx-2">|</span>
               <span className="font-medium">Try:</span> {weightRec.recommended} lbs
@@ -137,19 +137,19 @@ export function TrackLiftTab() {
         )}
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Notes</label>
+          <label className="block text-sm font-medium text-muted-foreground mb-2">Notes</label>
           <input
             type="text"
             value={formData.notes}
             onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm bg-white dark:bg-gray-800 placeholder:text-gray-400 dark:placeholder:text-gray-400"
+            className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent text-sm bg-secondary text-foreground placeholder:text-muted-foreground"
             placeholder="Optional notes..."
           />
         </div>
 
         <button
           type="submit"
-          className="w-full px-6 py-4 bg-indigo-600 dark:bg-indigo-500 text-white rounded-xl hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-colors flex items-center justify-center gap-2 text-lg font-medium"
+          className="w-full px-6 py-4 btn-primary rounded-xl flex items-center justify-center gap-2 text-lg"
         >
           <Send size={20} />
           Log Set
@@ -160,22 +160,22 @@ export function TrackLiftTab() {
 
       {/* Progress Section */}
       {formData.exercise && filteredData.length > 0 && (
-        <div className="p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+        <div className="p-4 bg-card rounded-lg border border-border">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="font-medium text-gray-800 dark:text-gray-100">{formData.exercise} Progress</h3>
+            <h3 className="font-medium text-foreground">{formData.exercise} Progress</h3>
             <div className="flex gap-2">
               <button
                 onClick={() => setProgressView('chart')}
-                className={`px-3 py-1 rounded text-xs ${
-                  progressView === 'chart' ? 'bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-400' : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400'
+                className={`px-3 py-1 rounded text-xs transition-all ${
+                  progressView === 'chart' ? 'bg-[var(--accent-cyan)]/10 text-[var(--accent-cyan)] border border-[var(--accent-cyan)]/20' : 'bg-secondary text-muted-foreground'
                 }`}
               >
                 Chart
               </button>
               <button
                 onClick={() => setProgressView('table')}
-                className={`px-3 py-1 rounded text-xs ${
-                  progressView === 'table' ? 'bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-400' : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400'
+                className={`px-3 py-1 rounded text-xs transition-all ${
+                  progressView === 'table' ? 'bg-[var(--accent-cyan)]/10 text-[var(--accent-cyan)] border border-[var(--accent-cyan)]/20' : 'bg-secondary text-muted-foreground'
                 }`}
               >
                 Table
@@ -183,7 +183,7 @@ export function TrackLiftTab() {
               <button
                 onClick={fetchLiftingData}
                 disabled={loading}
-                className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 rounded text-xs"
+                className="px-3 py-1 bg-secondary text-muted-foreground rounded text-xs hover:text-foreground transition-colors"
               >
                 {loading ? '...' : 'Refresh'}
               </button>
@@ -195,16 +195,16 @@ export function TrackLiftTab() {
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b">
-                    <th className="text-left py-2">Date</th>
-                    <th className="text-left py-2">Weight</th>
-                    <th className="text-left py-2">%</th>
-                    <th className="text-left py-2">Reps</th>
+                  <tr className="border-b border-border">
+                    <th className="text-left py-2 text-muted-foreground">Date</th>
+                    <th className="text-left py-2 text-muted-foreground">Weight</th>
+                    <th className="text-left py-2 text-muted-foreground">%</th>
+                    <th className="text-left py-2 text-muted-foreground">Reps</th>
                   </tr>
                 </thead>
                 <tbody>
                   {filteredData.slice(-10).reverse().map((record) => (
-                    <tr key={record.id} className="border-b">
+                    <tr key={record.id} className="border-b border-border">
                       <td className="py-2">{record.Date}</td>
                       <td className="py-2">{record.Weight}</td>
                       <td className="py-2">{formatPercentage(record.Percentage)}</td>
@@ -220,9 +220,9 @@ export function TrackLiftTab() {
 
       {/* Last Completed Routine */}
       {lastCompletedRoutine && (
-        <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-700">
-          <p className="text-sm text-gray-600 dark:text-gray-400">
-            Last: <span className="font-medium">{lastCompletedRoutine.routine}</span>
+        <div className="p-4 bg-secondary rounded-lg border border-border">
+          <p className="text-sm text-muted-foreground">
+            Last: <span className="font-medium text-foreground">{lastCompletedRoutine.routine}</span>
             <span className="mx-2">•</span>
             {formatDateWithYear(lastCompletedRoutine.date)}
             <span className="mx-2">•</span>
@@ -233,8 +233,8 @@ export function TrackLiftTab() {
 
       {/* Routine Checklist */}
       {selectedRoutine && routineExercises.length > 0 && (
-        <div className="p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
-          <h3 className="font-medium text-gray-800 dark:text-gray-100 mb-3">{selectedRoutine} Checklist</h3>
+        <div className="p-4 bg-card rounded-lg border border-border">
+          <h3 className="font-medium text-foreground mb-3">{selectedRoutine} Checklist</h3>
           <div className="space-y-2">
             {routineExercises.map((item) => {
               const isComplete = isRoutineItemComplete(item, liftingData, selectedRoutine);
@@ -244,23 +244,23 @@ export function TrackLiftTab() {
                 <div
                   key={item.id}
                   className={`p-3 rounded-lg flex justify-between items-center ${
-                    isComplete ? 'bg-green-50' : 'bg-gray-50'
+                    isComplete ? 'bg-[#00ff88]/10 border border-[#00ff88]/20' : 'bg-secondary'
                   }`}
                 >
                   <div>
-                    <span className={`text-sm ${isComplete ? 'line-through text-gray-400' : 'font-medium'}`}>
+                    <span className={`text-sm ${isComplete ? 'line-through text-muted-foreground' : 'font-medium'}`}>
                       {item.Exercise}
                     </span>
-                    <span className="text-xs text-gray-500 ml-2">
+                    <span className="text-xs text-muted-foreground ml-2">
                       {formatPercentage(item.Percentage)} × {item.Reps}
                     </span>
                   </div>
                   {!isComplete && rec.current && (
-                    <span className="text-xs text-indigo-600 dark:text-indigo-400 font-medium">
+                    <span className="text-xs text-[var(--accent-cyan)] font-medium">
                       {rec.current} lbs
                     </span>
                   )}
-                  {isComplete && <span className="text-green-600">✓</span>}
+                  {isComplete && <span className="text-[#00ff88]">✓</span>}
                 </div>
               );
             })}

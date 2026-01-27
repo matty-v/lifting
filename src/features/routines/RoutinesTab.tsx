@@ -53,8 +53,8 @@ export function RoutinesTab() {
   return (
     <div className="space-y-4">
       {/* Add/Edit Form */}
-      <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-700">
-        <h3 className="font-medium text-gray-800 dark:text-gray-100 mb-3">
+      <div className="p-4 bg-secondary rounded-lg border border-border">
+        <h3 className="font-medium text-foreground mb-3">
           {editingRoutineItem ? 'Edit Routine Item' : 'Add to Routine'}
         </h3>
         <div className="space-y-3">
@@ -69,10 +69,10 @@ export function RoutinesTab() {
               }}
               onFocus={() => setShowRoutineSuggestions(true)}
               onBlur={() => setTimeout(() => setShowRoutineSuggestions(false), 200)}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-800 placeholder:text-gray-400 dark:placeholder:text-gray-400"
+              className="w-full px-3 py-2 border border-border rounded-lg text-sm bg-secondary text-foreground placeholder:text-muted-foreground"
             />
             {showRoutineSuggestions && uniqueRoutines.length > 0 && routineForm.routine && (
-              <div className="absolute z-10 w-full mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg max-h-32 overflow-y-auto">
+              <div className="absolute z-10 w-full mt-1 bg-card border border-border rounded-lg shadow-lg max-h-32 overflow-y-auto">
                 {uniqueRoutines
                   .filter((r) => r.toLowerCase().includes(routineForm.routine.toLowerCase()))
                   .map((routine) => (
@@ -83,7 +83,7 @@ export function RoutinesTab() {
                         setRoutineForm({ ...routineForm, routine });
                         setShowRoutineSuggestions(false);
                       }}
-                      className="w-full px-3 py-2 text-left text-sm hover:bg-gray-50 dark:hover:bg-gray-700"
+                      className="w-full px-3 py-2 text-left text-sm text-foreground hover:bg-secondary"
                     >
                       {routine}
                     </button>
@@ -95,7 +95,7 @@ export function RoutinesTab() {
           <select
             value={routineForm.exercise}
             onChange={(e) => setRoutineForm({ ...routineForm, exercise: e.target.value })}
-            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+            className="w-full px-3 py-2 border border-border rounded-lg text-sm bg-secondary text-foreground"
           >
             <option value="">Select Exercise</option>
             {exercises.map((ex) => (
@@ -109,7 +109,7 @@ export function RoutinesTab() {
             <select
               value={routineForm.percentage}
               onChange={(e) => setRoutineForm({ ...routineForm, percentage: e.target.value })}
-              className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+              className="px-3 py-2 border border-border rounded-lg text-sm bg-secondary text-foreground"
             >
               <option value="">Percentage</option>
               {PERCENTAGE_OPTIONS.map((opt) => (
@@ -123,7 +123,7 @@ export function RoutinesTab() {
               placeholder="Reps"
               value={routineForm.reps}
               onChange={(e) => setRoutineForm({ ...routineForm, reps: e.target.value })}
-              className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-800 placeholder:text-gray-400 dark:placeholder:text-gray-400"
+              className="px-3 py-2 border border-border rounded-lg text-sm bg-secondary text-foreground placeholder:text-muted-foreground"
             />
           </div>
 
@@ -132,7 +132,7 @@ export function RoutinesTab() {
               <button
                 type="button"
                 onClick={handleCancel}
-                className="flex-1 px-3 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg text-sm"
+                className="flex-1 px-3 py-2 btn-secondary rounded-lg text-sm"
               >
                 Cancel
               </button>
@@ -140,7 +140,7 @@ export function RoutinesTab() {
             <button
               type="button"
               onClick={saveRoutineItem}
-              className="flex-1 px-3 py-2 bg-indigo-600 dark:bg-indigo-500 text-white rounded-lg text-sm"
+              className="flex-1 px-3 py-2 btn-primary rounded-lg text-sm"
             >
               {editingRoutineItem ? 'Update' : 'Add'}
             </button>
@@ -150,8 +150,8 @@ export function RoutinesTab() {
 
       {/* Current Routine Exercises */}
       {routineForm.routine && filteredRoutines.length > 0 && (
-        <div className="p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
-          <h4 className="font-medium text-gray-800 dark:text-gray-100 mb-2">
+        <div className="p-4 bg-card rounded-lg border border-border">
+          <h4 className="font-medium text-foreground mb-2">
             Exercises in "{routineForm.routine}"
           </h4>
           <div className="space-y-2">
@@ -160,11 +160,11 @@ export function RoutinesTab() {
               return (
                 <div
                   key={item.id}
-                  className="flex justify-between items-center p-2 bg-gray-50 dark:bg-gray-700 rounded"
+                  className="flex justify-between items-center p-2 bg-secondary rounded"
                 >
                   <div>
-                    <span className="text-sm font-medium">{item.Exercise}</span>
-                    <span className="text-xs text-gray-500 ml-2">
+                    <span className="text-sm font-medium text-foreground">{item.Exercise}</span>
+                    <span className="text-xs text-muted-foreground ml-2">
                       {formatPercentage(item.Percentage)} × {item.Reps || '?'}
                     </span>
                   </div>
@@ -172,14 +172,14 @@ export function RoutinesTab() {
                     <button
                       type="button"
                       onClick={() => handleEditRoutineItem(item)}
-                      className="px-2 py-1 bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 rounded text-xs"
+                      className="px-2 py-1 bg-secondary text-foreground rounded text-xs border border-border hover:bg-[var(--accent-purple)]/20 transition-colors"
                     >
                       Edit
                     </button>
                     <button
                       type="button"
                       onClick={() => deleteRoutineItem(item, actualIndex)}
-                      className="px-2 py-1 bg-red-100 text-red-700 rounded text-xs"
+                      className="px-2 py-1 bg-[var(--accent-pink)]/10 text-[var(--accent-pink)] rounded text-xs hover:bg-[var(--accent-pink)]/20 transition-colors"
                     >
                       Delete
                     </button>

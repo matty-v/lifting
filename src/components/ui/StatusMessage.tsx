@@ -7,12 +7,12 @@ export function StatusMessage({ status }: StatusMessageProps) {
 
   const getStatusStyle = () => {
     if (status.includes('✓')) {
-      return 'bg-green-50 dark:bg-green-900 text-green-800 dark:text-green-200';
+      return 'bg-[#00ff88]/10 text-[#00ff88]';
     }
     if (status.includes('❌') || status.includes('⚠️')) {
-      return 'bg-red-50 dark:bg-red-900 text-red-800 dark:text-red-200';
+      return 'bg-[var(--accent-pink)]/10 text-[var(--accent-pink)]';
     }
-    return 'bg-blue-50 dark:bg-blue-900 text-blue-800 dark:text-blue-200';
+    return 'bg-[var(--accent-cyan)]/10 text-[var(--accent-cyan)]';
   };
 
   return (

@@ -17,8 +17,11 @@ export function WeightChart({ data }: WeightChartProps) {
   const chartConfig = useMemo<ChartConfiguration | null>(() => {
     if (data.length === 0) return null;
 
-    const textColor = isDark ? 'rgb(209, 213, 219)' : 'rgb(55, 65, 81)';
-    const gridColor = isDark ? 'rgba(75, 85, 99, 0.3)' : 'rgba(229, 231, 235, 0.8)';
+    // voget.io theme colors
+    const purpleColor = '#a78bfa';
+    const textColor = isDark ? 'hsl(210, 40%, 98%)' : 'hsl(220, 50%, 10%)';
+    const gridColor = isDark ? 'rgba(100, 150, 255, 0.1)' : 'rgba(100, 150, 255, 0.15)';
+    const tooltipBg = isDark ? '#121821' : '#ffffff';
 
     return {
       type: 'line',
@@ -28,10 +31,12 @@ export function WeightChart({ data }: WeightChartProps) {
           {
             label: 'Body Weight (lbs)',
             data: data.map((d) => d.Weight),
-            borderColor: 'rgb(34, 197, 94)',
-            backgroundColor: 'rgba(34, 197, 94, 0.1)',
+            borderColor: purpleColor,
+            backgroundColor: 'rgba(167, 139, 250, 0.1)',
             tension: 0.3,
             fill: true,
+            pointBackgroundColor: purpleColor,
+            pointBorderColor: purpleColor,
           },
         ],
       },
@@ -43,10 +48,10 @@ export function WeightChart({ data }: WeightChartProps) {
             display: false,
           },
           tooltip: {
-            backgroundColor: isDark ? 'rgb(31, 41, 55)' : 'rgb(255, 255, 255)',
+            backgroundColor: tooltipBg,
             titleColor: textColor,
             bodyColor: textColor,
-            borderColor: isDark ? 'rgb(75, 85, 99)' : 'rgb(229, 231, 235)',
+            borderColor: 'rgba(100, 150, 255, 0.2)',
             borderWidth: 1,
           },
         },

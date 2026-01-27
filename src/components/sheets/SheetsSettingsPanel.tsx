@@ -57,11 +57,11 @@ export function SheetsSettingsPanel({
     <div className="space-y-6">
       {isEditing ? (
         <>
-          <p className="text-sm text-gray-800 dark:text-gray-100 font-medium">Change Spreadsheet</p>
-          <p className="text-xs text-gray-500">
+          <p className="text-sm text-foreground font-medium">Change Spreadsheet</p>
+          <p className="text-xs text-muted-foreground">
             Make sure to share the new spreadsheet with:
             <br />
-            <code className="block mt-1 p-2 bg-gray-100 dark:bg-gray-700 rounded text-xs break-all select-all">
+            <code className="block mt-1 p-2 bg-secondary rounded text-xs break-all select-all text-[var(--accent-cyan)]">
               {serviceAccountEmail}
             </code>
           </p>
@@ -71,14 +71,14 @@ export function SheetsSettingsPanel({
               value={tempInputValue}
               onChange={(e) => onTempInputChange(e.target.value)}
               placeholder={inputPlaceholder}
-              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm bg-white dark:bg-gray-800 placeholder:text-gray-400 dark:placeholder:text-gray-400"
+              className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent text-sm bg-secondary text-foreground placeholder:text-muted-foreground"
             />
           </div>
           <div className="flex gap-2">
             <button
               type="button"
               onClick={handleCancel}
-              className="flex-1 px-4 py-3 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors text-sm font-medium"
+              className="flex-1 px-4 py-3 btn-secondary rounded-lg text-sm"
             >
               Cancel
             </button>
@@ -86,7 +86,7 @@ export function SheetsSettingsPanel({
               type="button"
               onClick={handleSave}
               disabled={isSaving || !tempInputValue}
-              className="flex-1 px-4 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-1 px-4 py-3 btn-primary rounded-lg text-sm disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isSaving ? savingButtonText : saveButtonText}
             </button>
@@ -94,13 +94,13 @@ export function SheetsSettingsPanel({
         </>
       ) : (
         <>
-          <div className="p-4 bg-green-50 dark:bg-indigo-900 border border-green-200 dark:border-gray-700 rounded-lg">
-            <p className="text-sm text-green-800 dark:text-gray-100 font-medium mb-2">✓ {connectedText}</p>
+          <div className="p-4 bg-[#00ff88]/10 border border-[#00ff88]/20 rounded-lg">
+            <p className="text-sm text-[#00ff88] font-medium mb-2">✓ {connectedText}</p>
             <a
               href={`https://docs.google.com/spreadsheets/d/${spreadsheetId}/edit`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm text-green-700 dark:text-gray-300 hover:text-green-900 dark:hover:text-white underline break-all"
+              className="text-sm text-[var(--accent-cyan)] hover:text-[var(--accent-cyan)]/80 underline break-all"
             >
               Open Spreadsheet
             </a>
@@ -108,7 +108,7 @@ export function SheetsSettingsPanel({
           <button
             type="button"
             onClick={handleStartEditing}
-            className="w-full px-4 py-3 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors text-sm font-medium"
+            className="w-full px-4 py-3 btn-secondary rounded-lg text-sm"
           >
             {changeButtonText}
           </button>
@@ -130,10 +130,10 @@ function StatusMessage({ status }: { status: string }) {
   const isSuccess = status.includes('✓') || status.includes('✔');
 
   const bgColor = isError
-    ? 'bg-red-50 dark:bg-indigo-900 text-red-800 dark:text-gray-100'
+    ? 'bg-[var(--accent-pink)]/10 text-[var(--accent-pink)]'
     : isSuccess
-      ? 'bg-green-50 dark:bg-indigo-900 text-green-800 dark:text-gray-100'
-      : 'bg-blue-50 dark:bg-indigo-900 text-blue-800 dark:text-gray-100';
+      ? 'bg-[#00ff88]/10 text-[#00ff88]'
+      : 'bg-[var(--accent-cyan)]/10 text-[var(--accent-cyan)]';
 
   return (
     <div className={`p-3 rounded-lg text-sm font-medium ${bgColor}`}>
