@@ -10,33 +10,14 @@
   <!-- Dark background -->
   <rect width="512" height="512" rx="64" fill="#0a0e14"/>
 
-  <!-- Glow layer (behind) -->
-  <g fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="28" stroke-linecap="round" stroke-linejoin="round">
-    <!-- Main diagonal bar -->
-    <path d="M139 139 l234 234"/>
-    <!-- End caps -->
-    <path d="M448 448 l-21 -21"/>
-    <path d="M64 64 l21 21"/>
-    <!-- Bottom-right weight -->
-    <path d="M384 469 l85 -85"/>
-    <path d="M299 448 l149 -149"/>
-    <!-- Top-left weight -->
-    <path d="M43 128 l85 -85"/>
-    <path d="M64 213 l149 -149"/>
-  </g>
-
-  <!-- Main layer -->
-  <g fill="none" stroke="url(#dumbbellGradient)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round">
-    <!-- Main diagonal bar -->
-    <path d="M139 139 l234 234"/>
-    <!-- End caps -->
-    <path d="M448 448 l-21 -21"/>
-    <path d="M64 64 l21 21"/>
-    <!-- Bottom-right weight -->
-    <path d="M384 469 l85 -85"/>
-    <path d="M299 448 l149 -149"/>
-    <!-- Top-left weight -->
-    <path d="M43 128 l85 -85"/>
-    <path d="M64 213 l149 -149"/>
+  <!-- Exact Dumbbell.tsx paths scaled 16x and centered -->
+  <g transform="translate(64, 64) scale(16)" fill="none" stroke="url(#dumbbellGradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m6.5 6.5 11 11" />
+    <path d="m21 21-1-1" />
+    <path d="m3 3 1 1" />
+    <path d="m18 22 4-4" />
+    <path d="m2 6 4-4" />
+    <path d="m3 10 7-7" />
+    <path d="m14 21 7-7" />
   </g>
 </svg>
