@@ -1,11 +1,42 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="64" fill="#4f46e5"/>
-  <g fill="none" stroke="#ffffff" stroke-width="24" stroke-linecap="round">
-    <!-- Dumbbell -->
-    <line x1="128" y1="256" x2="384" y2="256"/>
-    <rect x="96" y="192" width="48" height="128" rx="8" fill="#ffffff"/>
-    <rect x="368" y="192" width="48" height="128" rx="8" fill="#ffffff"/>
-    <rect x="64" y="224" width="48" height="64" rx="8" fill="#ffffff"/>
-    <rect x="400" y="224" width="48" height="64" rx="8" fill="#ffffff"/>
+  <defs>
+    <linearGradient id="dumbbellGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00d4ff"/>
+      <stop offset="50%" style="stop-color:#6366f1"/>
+      <stop offset="100%" style="stop-color:#a78bfa"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Dark background -->
+  <rect width="512" height="512" rx="64" fill="#0a0e14"/>
+
+  <!-- Glow layer (behind) -->
+  <g fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="28" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Main diagonal bar -->
+    <path d="M139 139 l234 234"/>
+    <!-- End caps -->
+    <path d="M448 448 l-21 -21"/>
+    <path d="M64 64 l21 21"/>
+    <!-- Bottom-right weight -->
+    <path d="M384 469 l85 -85"/>
+    <path d="M299 448 l149 -149"/>
+    <!-- Top-left weight -->
+    <path d="M43 128 l85 -85"/>
+    <path d="M64 213 l149 -149"/>
+  </g>
+
+  <!-- Main layer -->
+  <g fill="none" stroke="url(#dumbbellGradient)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Main diagonal bar -->
+    <path d="M139 139 l234 234"/>
+    <!-- End caps -->
+    <path d="M448 448 l-21 -21"/>
+    <path d="M64 64 l21 21"/>
+    <!-- Bottom-right weight -->
+    <path d="M384 469 l85 -85"/>
+    <path d="M299 448 l149 -149"/>
+    <!-- Top-left weight -->
+    <path d="M43 128 l85 -85"/>
+    <path d="M64 213 l149 -149"/>
   </g>
 </svg>
