@@ -34,3 +34,6 @@ coverage/
 playwright-report/
 test-results/
 github-actions-key.json
+
+# Firebase
+.firebase/

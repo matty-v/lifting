@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "deploy": "./upload-to-gcs.sh lifting-tracker",
+    "deploy": "npm run build && firebase deploy",
     "test": "vitest",
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage"
